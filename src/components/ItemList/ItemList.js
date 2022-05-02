@@ -1,9 +1,12 @@
 import './styles.css';
 
-function ItemList(name, checked, onChange) {
+function ItemList({name, checked, onChange}) {
   return (
     <div className="ItemList">
-      <input type='checkbox' checked={checked} onChange={onChange}>{name}</input>
+      <input type='checkbox' checked={checked} onChange={onChange} />
+      <span className='span-text'>
+        {name}
+      </span>
     </div>
   );
 }
