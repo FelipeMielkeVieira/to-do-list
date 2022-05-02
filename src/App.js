@@ -1,23 +1,53 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import ItemList from './components/ItemList';
 
 function App() {
+  const [newItemName, setNewItemName] = useState('');
+
+  const [items, setItems] = useState([
+    { name: 'Learn React', checked: false }
+  ]);
+
+  useEffect(
+    () => { console.log('useEffect'); },
+    []
+  )
+
+  useEffect(
+    () => { console.log('Mudou a Lista: ', items) },
+    [items]
+  )
+
+  const checkItem = (index) => {
+    const newItems = [...items];
+    newItems[index].checked = !newItems[index].checked;
+    setItems(newItems);
+  }
+
+  const addItem = () => {
+    const newItems = [...items];
+    newItems.push({ name: newItemName, checked: false })
+    setItems(newItems);
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <input type='text' placeholder='Name new Item'
+        value={newItemName}
+        onChange={(e) => setNewItemName(e.target.value)}
+      />
+      <button onClick={() => addItem()}></button>
+
+      {
+        items.map((item, index) => {
+          return <ItemList key={`${item.name}${index}`} name={item.name} checked={item.checked} onChange={() => checkItem(index)
+
+          } />
+        })
+      }
+
     </div>
   );
 }
